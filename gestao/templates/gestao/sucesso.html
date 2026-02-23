@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDAY · Sucesso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at 50% 10%, #4a0404, #000000);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .liquid-card {
+            max-width: 450px;
+            width: 100%;
+            background: rgba(15, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
+        }
+
+        .card-content { position: relative; z-index: 5; color: #fdfdfd; }
+
+        .icon-check {
+            font-size: 4rem;
+            color: #ff4d4d;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 15px rgba(255, 77, 77, 0.5));
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #ffffff, #ff4d4d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            color: #cbd5e0;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ff4d4d;
+            text-decoration: none;
+            border: 1px solid rgba(255, 77, 77, 0.4);
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-voltar:hover {
+            background: rgba(255, 77, 77, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .badge-confirmado {
+            display: inline-block;
+            background: rgba(0, 255, 100, 0.1);
+            color: #00ff64;
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            padding: 4px 15px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="liquid-card">
+        <div class="card-content">
+            <div class="badge-confirmado">Cadastro Validado</div>
+            <div class="icon-check">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+            <h1>Tudo certo, parceiro!</h1>
+            <p>Sua economia foi registrada no sistema <b>Mday</b>. Nossa equipe entrará em contato via WhatsApp para liberar seu desconto exclusivo.</p>
+
+            <a href="/" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> VOLTAR AO INÍCIO
+            </a>
+        </div>
+    </div>
+</body>
+</html>
