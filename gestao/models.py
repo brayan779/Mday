@@ -13,6 +13,7 @@ class LeadEconomia(models.Model):
     quantidade_marmitas = models.IntegerField(verbose_name="Quantas marmitas por semana?")
     nome_completo = models.CharField(max_length=150, verbose_name="Como é seu nome?")
     whatsapp = models.CharField(max_length=20, verbose_name="Informe seu WhatsApp")
+    marmitas_consumidas = models.IntegerField(default=0)
     data_criacao = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

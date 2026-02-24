@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mday · Convênios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --red-mday: #ff0000;
+            --bg-glass: rgba(15, 2, 2, 0.95);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000 url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover; background-attachment: fixed; background-position: center;
+            color: white; min-height: 100vh; padding: 20px 20px 100px 20px;
+        }
+
+        .container { max-width: 500px; margin: 0 auto; }
+
+        .header { margin-bottom: 30px; }
+        .periodo-badge {
+            background: #000; padding: 4px 12px; border-radius: 8px;
+            font-size: 0.75rem; font-weight: 800; border: 1px solid #333;
+        }
+        .header h1 { font-size: 2.8rem; font-weight: 800; margin-top: 15px; line-height: 1; }
+
+        /* Card Estilo 5 Passos */
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .nome-conveniado { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; display: block; }
+        .dias-texto { font-size: 0.75rem; color: var(--red-mday); font-weight: 600; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .progress-container { margin: 25px 0; }
+        .progress-labels { display: flex; justify-content: space-between; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; line-height: 1; }
+        .total-label { opacity: 0.3; }
+
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.05); height: 14px; border-radius: 20px;
+            overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .progress-bar-fill {
+            background: var(--red-mday); height: 100%;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-group { display: flex; gap: 10px; margin-bottom: 10px; }
+
+        .btn-mday {
+            background: var(--red-mday); color: white; border: none;
+            padding: 15px; border-radius: 12px; font-weight: 800;
+            width: 100%; text-transform: uppercase; cursor: pointer;
+            font-size: 0.8rem; letter-spacing: 1px; display: flex;
+            align-items: center; justify-content: center; text-decoration: none;
+        }
+
+        .btn-green { background: #00c832; font-size: 0.7rem; padding: 12px; }
+
+        .btn-delete {
+            display: block; text-align: right; color: #444; font-size: 0.65rem;
+            margin-top: 15px; text-decoration: none; font-weight: 600; text-transform: uppercase;
+        }
+
+        /* Modal Estilizado */
+        .modal {
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--bg-glass); padding: 30px; border-radius: 25px;
+            width: 90%; max-width: 400px; border: 1px solid var(--red-mday); text-align: center;
+        }
+
+        input, select {
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px;
+            background: #111; color: white; border: 1px solid #333; font-family: 'Poppins';
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="periodo-badge">Periodo 24/02</span>
+            <h1>Convênios</h1>
+        </div>
+
+        {% for lead in leads %}
+        <div class="glass-card">
+            <span class="nome-conveniado">{{ lead.nome_completo }}</span>
+            <span class="dias-texto">Dias: Quarta, Quinta e Sexta</span>
+
+            <div class="progress-container">
+                <div class="progress-labels">
+                    <span>{{ lead.marmitas_consumidas|stringformat:"02d" }}</span>
+                    <span class="total-label">{{ lead.quantidade_marmitas|stringformat:"02d" }}</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill"
+                         style="width: {% if lead.marmitas_consumidas >= lead.quantidade_marmitas %}100{% else %}{% widthratio lead.marmitas_consumidas lead.quantidade_marmitas 100 %}{% endif %}%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <a href="https://wa.me/{{ lead.whatsapp }}" class="btn-mday btn-green">SALDAÇÃO</a>
+                <a href="https://wa.me/{{ lead.whatsapp }}" class="btn-mday btn-green">CONFIRMAÇÃO</a>
+            </div>
+
+            <button class="btn-mday" onclick="openModal('{{ lead.nome_completo }}', '{{ lead.id }}')">
+                ADICIONAR MARMITA
+            </button>
+
+            <a href="{% url 'excluir_convenio' lead.id %}"
+               class="btn-delete"
+               onclick="return confirm('Dai mn, tem certeza? Vai apagar o card do {{ lead.nome_completo }}.')">
+               <i class="fa-solid fa-trash-can"></i> APAGAR CARD
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="marmitaModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalNome" style="margin-bottom: 20px; text-transform: uppercase;">Adicionar Registro</h3>
+            <form id="formMarmita" method="POST">
+                {% csrf_token %}
+                <input type="number" name="quantidade" value="1" readonly>
+                <select name="dia">
+                    <option value="quarta">Quarta-feira</option>
+                    <option value="quinta">Quinta-feira</option>
+                    <option value="sexta">Sexta-feira</option>
+                </select>
+                <button type="submit" class="btn-mday">CONFIRMAR REGISTRO</button>
+                <button type="button" style="background:none; border:none; color:#666; margin-top:15px; width:100%; font-weight: 600; cursor:pointer;" onclick="closeModal()">CANCELAR</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(nome, id) {
+            document.getElementById('modalNome').innerText = nome;
+            document.getElementById('formMarmita').action = "/registrar-consumo/" + id + "/";
+            document.getElementById('marmitaModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('marmitaModal').style.display = 'none';
+        }
+        window.onclick = function(e) { if (e.target == document.getElementById('marmitaModal')) closeModal(); }
+    </script>
+</body>
+</html>
