@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-%+rk!+q^u-mr_j$fno2ffjbrwqs709o@fp_-pwd8by7uz+56st
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['BrayanMath.pythonanywhere.com']
 
 
 # Application definition
